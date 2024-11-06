@@ -56,12 +56,12 @@ public class UniversiteServiceImpl implements IUniversiteService {
             return null;
         }
     }
-    @Scheduled (fixedRate = 60000)
-    public void logAllProductsEveryMinute() {
-        log.debug("Scheduled task: Retrieving and logging all products every minute");
-        List<Universite> universite= retrieveAllUniversites();
-        log.info("Retrieved Universite: {}", universite);
-    }
+//    @Scheduled (fixedRate = 60000)
+//    public void logAllProductsEveryMinute() {
+//        log.debug("Scheduled task: Retrieving and logging all products every minute");
+//        List<Universite> universite= retrieveAllUniversites();
+//        log.info("Retrieved Universite: {}", universite);
+//    }
     public Universite retrieveUniversite(Integer idUniversite) {
         logger.debug("Retrieving university with ID: {}", idUniversite);
         return universiteRepository.findById(idUniversite)
