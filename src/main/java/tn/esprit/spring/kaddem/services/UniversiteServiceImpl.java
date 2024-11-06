@@ -1,8 +1,10 @@
 package tn.esprit.spring.kaddem.services;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import tn.esprit.spring.kaddem.entities.Departement;
 import tn.esprit.spring.kaddem.entities.Universite;
@@ -12,7 +14,10 @@ import tn.esprit.spring.kaddem.repositories.UniversiteRepository;
 import java.util.List;
 import java.util.Set;
 
+import static jdk.nashorn.internal.runtime.regexp.joni.Config.log;
+
 @Service
+@Slf4j
 public class UniversiteServiceImpl implements IUniversiteService {
 
     private static final Logger logger = LogManager.getLogger(UniversiteServiceImpl.class);
@@ -51,7 +56,12 @@ public class UniversiteServiceImpl implements IUniversiteService {
             return null;
         }
     }
-
+    @Scheduled (fixedRate = 60000)
+    public void logAllProductsEveryMinute() {
+        log.debug("Scheduled task: Retrieving and logging all products every minute");
+        List<Universite> universite= retrieveAllUniversites();
+        log.info("Retrieved Universite: {}", universite);
+    }
     public Universite retrieveUniversite(Integer idUniversite) {
         logger.debug("Retrieving university with ID: {}", idUniversite);
         return universiteRepository.findById(idUniversite)
